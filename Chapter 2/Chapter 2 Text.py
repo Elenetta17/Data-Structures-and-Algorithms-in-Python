@@ -37,8 +37,24 @@ class CreditCard:
         
     def make_payement(self, amount):
         self._balance -= amount
+   
         
+class PredatoryCreditCard(CreditCard):
+    def __init__(self, customer, bank, acnt, limit, apr):
+        super().__init__(customer, bank, acnt, limit)
+        self._apr = apr
         
+    def charge(self,price):
+        succes = super.charge(price)
+        if not succes:
+            self._balance += 5
+        return succes
+    
+    def process_month(self):
+        if self._balance > 0:
+            monthly_factor = pow(1+self._aprt, 1/12)
+            self._balance *= monthly_factor
+            
 # if __name__ == "__main__":
 #     wallet = []
 #     wallet.append(CreditCard("John Bowman", "California Savings", "5391 0375 9387 5309", 2500))
