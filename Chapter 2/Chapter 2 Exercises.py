@@ -75,7 +75,12 @@ class CreditCard:
             
 class Vector:
     def __init__(self, d):
-        self._coords = [0]*d
+        if isinstance(d, int):
+            self._coords = [0]*d
+        else:
+            self._coords = d
+            # for j in len(self._coords):
+            #     self._coords[j]=d[j]
         
     def __len__(self):
         return len(self._coords)
@@ -87,6 +92,14 @@ class Vector:
         self._coords[j] = val
         
     def __add__(self, other):
+        if len(self) != len(other):
+            raise ValueError("dimensions must agree")
+        result = Vector(len(self))
+        for j in range(len(self)):
+            result[j] = self[j] + other[j]
+        return result
+    
+    def __radd__(self, other):
         if len(self) != len(other):
             raise ValueError("dimensions must agree")
         result = Vector(len(self))
@@ -106,6 +119,29 @@ class Vector:
         result = Vector(len(self))
         for j in range(len(self)):
             result[j]=-self[j]
+        return result
+    
+    def __mul__(self,other):
+        if isinstance(other, (int, float)):
+            result = Vector((len(self)))
+            for j in range(len(self)):
+                result[j]=self[j]*other
+            return result
+    
+        if isinstance(other, (Vector, list)):
+            print(True)
+            if len(self) != len(other):
+                raise ValueError("dimensions must agree")
+            result = 0
+            print(self,other)
+            for j in range(len(self)):
+                result+=self[j]*other[j]
+            return result
+    
+    def __rmul__(self, n):
+        result = Vector(len(self))
+        for j in range(len(self)):
+            result[j]=self[j]*n
         return result
     
     def __eq__(self, other):
@@ -150,12 +186,8 @@ if __name__=="__main__":
     #         wallet[c].make_payement(100)
     #         print("New balance =", wallet[c].get_balance())
     #     print()
-    
-    a = Vector(2)
-    b = Vector(2)
+    a = Vector([1,2,3])
     a[0]=1
-    a[1]=2
-    b[0]=-5
-    b[1]=2
+
     
-    print(-b)
+    print(a*5)
