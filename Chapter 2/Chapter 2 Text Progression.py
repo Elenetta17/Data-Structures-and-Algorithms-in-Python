@@ -55,3 +55,11 @@ class FibonacciProgression(Progression):
         
     def _advance(self):
         self._prev, self._current = self._current, self._current + self._prev
+        
+        
+test = ArithmeticProgression(128,0)
+i = 0
+while test._current < 2**23:
+    print(test._current)
+    test._advance()
+    i+=1

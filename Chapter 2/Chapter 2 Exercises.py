@@ -153,7 +153,29 @@ class Vector:
     def __str__(self):
         return "<" + str(self._coords)[1:-1] + ">"
             
-
+class SequenceIterator:
+    
+    
+    def __init__(self, sequence):
+        self._seq = sequence
+        self._k = -1
+        
+    def __next__(self):
+        self._k += 1
+        if self._k < len(self._seq):
+            return(self._seq[self._k])
+        else:
+            raise StopIteration()
+            
+    def __iter__(self):
+        return self
+    
+    def __eq__(self, other):
+        return self._seq == other._seq
+    
+    def __lt__(self, other):
+        return self._seq < other._seq
+    
 if __name__=="__main__":
     
     # rose = Flower("rose", 1, 2)
@@ -186,8 +208,6 @@ if __name__=="__main__":
     #         wallet[c].make_payement(100)
     #         print("New balance =", wallet[c].get_balance())
     #     print()
-    a = Vector([1,2,3])
-    a[0]=1
-
-    
-    print(a*5)
+    a = SequenceIterator(["a",2])
+    b =  SequenceIterator(["c",3])
+    print(a < b)
