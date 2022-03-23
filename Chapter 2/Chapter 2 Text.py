@@ -150,9 +150,7 @@ class Range:
             
 from abc import ABCMeta, abstractmethod
 
-
-        
-        
+print(Range(10))
         
         
         
